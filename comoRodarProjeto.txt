@@ -1,0 +1,1 @@
+Colocar API no AR: uvicorn app.main:app --reload
