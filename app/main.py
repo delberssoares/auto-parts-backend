@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.core.errors import AppError
 from app.db.session import get_db
-from app.routers import auth, products
+from app.routers import auth, orders, products
 
 app = FastAPI(title="DSS Auto Peças API", version="0.2.0")
 
@@ -46,6 +46,8 @@ async def validation_error_handler(request: Request, exc: RequestValidationError
 app.include_router(auth.router)
 app.include_router(products.categories_router)
 app.include_router(products.router)
+app.include_router(orders.router)
+app.include_router(orders.admin_router)
 
 @app.get("/health")
 def health():
