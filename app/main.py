@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.core.errors import AppError
 from app.db.session import get_db
-from app.routers import auth
+from app.routers import auth, products
 
 app = FastAPI(title="DSS Auto Peças API", version="0.2.0")
 
@@ -44,7 +44,8 @@ async def validation_error_handler(request: Request, exc: RequestValidationError
 
 
 app.include_router(auth.router)
-
+app.include_router(products.categories_router)
+app.include_router(products.router)
 
 @app.get("/health")
 def health():
@@ -55,3 +56,6 @@ def health():
 def health_db(db: Session = Depends(get_db)):
     db.execute(text("select 1"))
     return {"status": "ok", "database": "connected"}
+
+
+
