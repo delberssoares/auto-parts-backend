@@ -2,20 +2,10 @@ import re
 from typing import Annotated, Literal
 
 from pydantic import AfterValidator, BaseModel, ConfigDict
+from app.schemas.common import bounded as _bounded
+
 
 SortOption = Literal["name", "price_asc", "price_desc"]
-
-
-def _bounded(label: str, min_len: int, max_len: int) -> AfterValidator:
-    def check(v: str) -> str:
-        v = v.strip()
-        if len(v) < min_len:
-            raise ValueError(f"{label}: use ao menos {min_len} caracteres")
-        if len(v) > max_len:
-            raise ValueError(f"{label}: use no máximo {max_len} caracteres")
-        return v
-
-    return AfterValidator(check)
 
 
 def _check_price(v: float) -> float:
