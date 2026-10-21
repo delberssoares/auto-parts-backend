@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     reset_cooldown_seconds: int = 60
     resend_api_key: str | None = None
     mail_from: str = "Auto Parts <onboarding@resend.dev>"
+    log_emails: bool = False
+    demo_reset_enabled: bool = False
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
