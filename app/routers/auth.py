@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks, Depends
 from sqlalchemy.orm import Session
-
+from app.core.config import settings
 from app.core.deps import get_current_user
 from app.core.security import create_access_token
 from app.db.session import get_db
@@ -10,7 +10,7 @@ from app.schemas.auth import (
     ForgotPasswordIn,
     LoginIn,
     MaskedEmailOut,
-    MessageOut,
+    ForgotPasswordOut,
     RegisterIn,
     ResetPasswordIn,
     TokenIn,
@@ -55,18 +55,29 @@ def change_password(
     background.add_task(mail_service.send_password_changed_email, name, email)
 
 
-@router.post("/forgot-password", response_model=MessageOut, status_code=202)
+@router.post(
+    "/forgot-password",
+    response_model=ForgotPasswordOut,
+    response_model_exclude_none=True,
+    status_code=202,
+)
 def forgot_password(
     data: ForgotPasswordIn,
     background: BackgroundTasks,
     db: Session = Depends(get_db),
 ):
+    message = "Se existir uma conta com este e-mail, enviaremos o link de redefinição."
     result = auth_service.request_password_reset(db, data.email)
+
     if result:
-        name, token = result
+        name, token, is_demo = result
+        if settings.demo_reset_enabled and is_demo:
+            # Conta de demonstração: devolve o token, sem e-mail
+            return ForgotPasswordOut(message=message, demo_reset_token=token)
         background.add_task(mail_service.send_password_reset_email, name, data.email, token)
-    # Mesma resposta exista ou não a conta
-    return MessageOut(message="Se existir uma conta com este e-mail, enviaremos o link de redefinição.")
+
+    # Mesma resposta exista ou não a conta (e para contas reais)
+    return ForgotPasswordOut(message=message)
 
 
 @router.post("/reset-password/validate", response_model=MaskedEmailOut)

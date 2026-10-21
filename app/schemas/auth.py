@@ -90,3 +90,7 @@ class MessageOut(BaseModel):
 
 class MaskedEmailOut(BaseModel):
     email: str
+
+class ForgotPasswordOut(BaseModel):
+    message: str
+    demo_reset_token: str | None = None

@@ -32,7 +32,13 @@ def register_user(db: Session, name: str, email: str, password: str) -> User:
     if get_user_by_email(db, email):
         raise AppError(409, "Já existe uma conta com este e-mail.")
 
-    user = User(name=name, email=email, password_hash=hash_password(password), role="customer")
+    user = User(
+    name=name,
+    email=email,
+    password_hash=hash_password(password),
+    role="customer",
+    is_demo=settings.demo_reset_enabled,
+)
     db.add(user)
     try:
         db.commit()
@@ -64,9 +70,8 @@ def change_password(db: Session, user: User, current_password: str, new_password
 
 
 # ---------- Recuperação de senha ----------
-
-def request_password_reset(db: Session, email: str) -> tuple[str, str] | None:
-    """Devolve (nome, token) se a conta existe, senão None. A API responde igual nos dois casos."""
+def request_password_reset(db: Session, email: str) -> tuple[str, str, bool] | None:
+    """Devolve (nome, token, is_demo) se a conta existe, senão None."""
     now = _now()
 
     # Cooldown por e-mail, valendo também para contas inexistentes
@@ -98,7 +103,7 @@ def request_password_reset(db: Session, email: str) -> tuple[str, str] | None:
                 expires_at=now + timedelta(minutes=settings.reset_token_ttl_minutes),
             )
         )
-        result = (user.name, token)
+        result = (user.name, token, user.is_demo)
 
     db.commit()
     return result
