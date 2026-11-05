@@ -1,14 +1,21 @@
-# Auto Parts (API)
+# Auto Parts API
 
-API REST da loja de autopeças [Auto Parts](https://github.com/delberssoares/auto-parts-frontend): autenticação, catálogo, pedidos com controle de estoque, fluxo de envio e recuperação de senha.
+API REST para uma loja de autopeças, desenvolvida com Python e FastAPI. Oferece autenticação de usuários, catálogo de produtos, gerenciamento de pedidos com controle de estoque, fluxo de envio e recuperação de senha.
+
+**🌐 [Acessar demonstração do Frontend](https://auto-parts-frontend-ten.vercel.app)**
+
+![Auto Parts Screenshot](main-screenshot.png)
+
+**📚 [Documentação da API (Swagger)](https://auto-parts-backend-bzag.onrender.com/docs)**
+
+## Tecnologias utilizadas
 
 ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?logo=sqlalchemy&logoColor=white)
 
-**Frontend (demonstração):** https://auto-parts-frontend-ten.vercel.app
-**Documentação interativa (Swagger):** https://auto-parts-backend-bzag.onrender.com/docs
+**Frontend:** [Repositório no GitHub](https://github.com/delberssoares/auto-parts-frontend)
 
 > A API roda no plano gratuito do Render e "dorme" após 15 minutos sem acesso. A primeira requisição depois disso pode levar até 1 minuto.
 
