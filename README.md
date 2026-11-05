@@ -8,7 +8,7 @@ API REST da loja de autopeças [Auto Parts](https://github.com/delberssoares/aut
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?logo=sqlalchemy&logoColor=white)
 
 **Frontend (demonstração):** https://auto-parts-frontend-ten.vercel.app
-**Documentação interativa (Swagger):** https://SEU-SERVICO.onrender.com/docs
+**Documentação interativa (Swagger):** https://auto-parts-backend-bzag.onrender.com/docs
 
 > A API roda no plano gratuito do Render e "dorme" após 15 minutos sem acesso. A primeira requisição depois disso pode levar até 1 minuto.
 
